@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chọn kính theo nhu cầu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f5f1;
+      --card: #ffffff;
+      --brown: #966f4f;
+      --brown-dark: #7a5740;
+      --ink: #4a3728;
+      --muted: #8b7e74;
+      --line: #e4ddd3;
+      --soft: #f3ebe0;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: "Montserrat", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.4;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    /* ===== 4 cột ngang (desktop) ===== */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+
+    .step {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 14px 18px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .step__head {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .step__num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--brown);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step__titles h2 {
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+
+    .step__titles p {
+      margin-top: 3px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .check {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--brown);
+      color: #fff;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .check svg { width: 11px; height: 11px; }
+    .is-active .check { display: flex; }
+
+    /* ===== STEP 1: list dọc ===== */
+    .models {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .model {
+      position: relative;
+      background: #faf8f5;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      width: 100%;
+      transition: border-color 0.2s;
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .model:hover { border-color: #c4b5a5; }
+
+    .model.is-active {
+      border-color: var(--brown);
+      box-shadow: 0 0 0 1px var(--brown);
+      grid-template-columns: 1fr;
+      text-align: center;
+      padding: 12px 10px 14px;
+    }
+
+    .model__img {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+    }
+
+    .model.is-active .model__img {
+      height: 120px;
+      margin-bottom: 6px;
+    }
+
+    .model__img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .model__meta { min-width: 0; }
+
+    .model__title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+
+    .model__title span {
+      font-weight: 700;
+      margin-right: 4px;
+    }
+
+    .model__desc {
+      font-size: 0.68rem;
+      color: var(--muted);
+      line-height: 1.35;
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* ===== STEP 2 ===== */
+    .color-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .nav-btn {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--brown);
+      color: var(--brown);
+    }
+
+    .nav-btn svg { width: 14px; height: 14px; }
+
+    .color-preview__img {
+      flex: 1;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .color-preview__img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .color-preview__label {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .color-preview__label span {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #ebe6de;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .swatch {
+      position: relative;
+      background: #faf8f5;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 6px 12px;
+      cursor: pointer;
+      text-align: center;
+      font-family: inherit;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .swatch.is-active {
+      border-color: var(--brown);
+      box-shadow: 0 0 0 1px var(--brown);
+    }
+
+    .swatch__img {
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .swatch__img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .swatch__name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+
+    /* ===== STEP 3 ===== */
+    .lenses {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .lens {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #faf8f5;
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 10px;
+      cursor: pointer;
+      font-family: inherit;
+      text-align: left;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+
+    .lens:hover { border-color: #c4b5a5; }
+
+    .lens.is-active {
+      border-color: var(--brown);
+      box-shadow: 0 0 0 1px var(--brown);
+    }
+
+    .lens.is-active .lens__chev { visibility: hidden; }
+
+    .lens__icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lens__icon img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .lens__text { flex: 1; min-width: 0; }
+
+    .lens__text strong {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .lens__text span {
+      font-size: 0.65rem;
+      color: var(--muted);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .lens__chev {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      color: #b0a89c;
+    }
+
+    .lens-note {
+      display: none;
+      gap: 8px;
+      align-items: flex-start;
+      margin-top: 12px;
+      padding: 10px;
+      background: #f7f1ea;
+      border-radius: 8px;
+      font-size: 0.68rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .lens-note.is-visible {
+      display: flex;
+    }
+
+    .lens-note__icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid var(--brown);
+      color: var(--brown);
+      font-size: 0.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-style: italic;
+      margin-top: 1px;
+    }
+
+    .cta-area {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .order-btn.is-hidden { display: none !important; }
+
+    .order-btn--zalo {
+      background: #fff;
+      color: var(--ink);
+      border: 1.5px solid var(--brown);
+      box-shadow: none;
+    }
+
+    .order-btn--zalo:hover {
+      background: #fff8f0;
+      color: var(--ink);
+      border-color: var(--brown-dark);
+    }
+
+    .order-btn--zalo .order-btn__text strong {
+      color: var(--brown);
+    }
+
+    .order-btn--zalo .order-btn__text span {
+      color: var(--muted);
+      opacity: 1;
+    }
+
+    .order-btn--zalo .order-btn__icon {
+      color: var(--brown);
+    }
+
+    .order-btn--zalo .zalo-btn__logo {
+      width: 24px;
+      height: 24px;
+      font-size: 0.5rem;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .price-note {
+      display: none;
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.35;
+    }
+
+    .price-note.is-visible { display: block; }
+
+    /* ===== STEP 4 ===== */
+    .summary {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .summary__product {
+      text-align: center;
+      padding: 8px 4px 0;
+    }
+
+    .summary__product img {
+      width: 100%;
+      max-height: 130px;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+
+    .summary__product-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .summary__details {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0 4px;
+    }
+
+    .summary__row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+    }
+
+    .summary__row label {
+      color: var(--muted);
+      font-weight: 500;
+      min-width: 84px;
+    }
+
+    .summary__row strong {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .summary__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+
+    .summary__price {
+      font-size: 1.25rem !important;
+      font-weight: 800 !important;
+    }
+
+    .order-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 14px;
+      background: var(--brown);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      margin-bottom: 12px;
+    }
+
+    .order-btn:hover { background: var(--brown-dark); }
+
+    .order-btn__icon {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .order-btn__text {
+      flex: 1;
+      text-align: center;
+    }
+
+    .order-btn__text strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .order-btn__text span {
+      font-size: 0.62rem;
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    .zalo-box {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--soft);
+      border: 1.5px solid #d4c0a8;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: auto;
+    }
+
+    .zalo-box__top {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .zalo-box__icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      color: var(--brown);
+    }
+
+    .zalo-box__text strong {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 3px;
+    }
+
+    .zalo-box__text p {
+      font-size: 0.65rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .zalo-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 10px;
+      background: #fff;
+      border: 1.5px solid var(--brown);
+      border-radius: 999px;
+      color: var(--brown);
+      font-family: inherit;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .zalo-btn:hover { background: #fff8f0; }
+
+    .zalo-btn__logo {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      background: #0068ff;
+      color: #fff;
+      font-size: 0.45rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ===== Trust footer ===== */
+    .trust {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 16px 12px;
+      background: #efede8;
+      border-radius: var(--radius);
+    }
+
+    .trust__item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 4px;
+    }
+
+    .trust__icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      color: var(--brown);
+    }
+
+    .trust__icon svg { width: 100%; height: 100%; }
+
+    .trust__item strong {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      color: var(--ink);
+    }
+
+    .trust__item span {
+      font-size: 0.65rem;
+      color: var(--muted);
+      line-height: 1.3;
+      font-weight: 500;
+    }
+
+    /* ===== Tablet: 2 cột ===== */
+    @media (max-width: 1024px) {
+      .steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .trust { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ===== Mobile: 1 cột ===== */
+    @media (max-width: 720px) {
+      .wrap { padding: 14px 12px 28px; }
+
+      .steps {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .step { padding: 14px 12px 16px; }
+
+      .step__titles h2 { font-size: 0.9rem; }
+      .step__titles p { font-size: 0.78rem; }
+
+      .model.is-active .model__img { height: 140px; }
+
+      .color-preview__img { height: 150px; }
+
+      .swatches {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .swatch { padding: 10px 6px 12px; }
+      .swatch__img { height: 72px; }
+      .swatch__name { font-size: 0.7rem; }
+
+      .summary__product img { max-height: 160px; }
+
+      .zalo-box { gap: 12px; }
+      .zalo-btn { font-size: 0.68rem; padding: 10px 12px; }
+
+      .trust {
+        grid-template-columns: 1fr 1fr;
+        padding: 12px 8px;
+      }
+
+      .trust__item strong { font-size: 0.62rem; }
+      .trust__item span { font-size: 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="steps">
+
+      <!-- STEP 1 -->
+      <section class="step" id="step1">
+        <div class="step__head">
+          <div class="step__num">1</div>
+          <div class="step__titles">
+            <h2>Chọn mẫu kính</h2>
+            <p>Nhấn vào mẫu bạn yêu thích</p>
+          </div>
+        </div>
+        <div class="models" id="models"></div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" id="step2">
+        <div class="step__head">
+          <div class="step__num">2</div>
+          <div class="step__titles">
+            <h2>Chọn màu</h2>
+            <p id="colorSub">Các màu có sẵn của mã 01</p>
+          </div>
+        </div>
+
+        <div class="color-preview">
+          <button type="button" class="nav-btn" id="prevColor" aria-label="Màu trước">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <div class="color-preview__img">
+            <img id="previewImg" src="" alt="Xem trước kính" />
+          </div>
+          <button type="button" class="nav-btn" id="nextColor" aria-label="Màu sau">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <p class="color-preview__label"><span id="previewLabel">—</span></p>
+        <div class="swatches" id="swatches"></div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" id="step3">
+        <div class="step__head">
+          <div class="step__num">3</div>
+          <div class="step__titles">
+            <h2>Thay tròng (nếu cần)</h2>
+            <p>Chọn loại tròng phù hợp</p>
+          </div>
+        </div>
+        <div class="lenses" id="lenses"></div>
+        <div class="lens-note" id="lensNote">
+          <span class="lens-note__icon">i</span>
+          <p id="lensNoteText">Thay tròng sẽ phát sinh thêm chi phí. Tư vấn & báo giá qua Zalo — không tự cộng vào giá kính.</p>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step" id="step4">
+        <div class="step__head">
+          <div class="step__num">4</div>
+          <div class="step__titles">
+            <h2>Thông tin đặt hàng</h2>
+            <p>Điền thông tin để đặt hàng</p>
+          </div>
+        </div>
+
+        <div class="summary">
+          <div class="summary__product">
+            <img id="sumImg" src="" alt="" />
+            <div class="summary__product-name" id="sumModel">Mã 01 — SUNGLASSES</div>
+          </div>
+          <div class="summary__details">
+            <div class="summary__row">
+              <label>Màu sắc:</label>
+              <span class="summary__dot" id="sumDot"></span>
+              <strong id="sumColor">—</strong>
+            </div>
+            <div class="summary__row">
+              <label>Loại tròng:</label>
+              <strong id="sumLens">Tròng râm (mặc định)</strong>
+            </div>
+            <div class="summary__row">
+              <label>Giá sản phẩm:</label>
+              <strong class="summary__price" id="sumPrice">109.000đ</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-area">
+          <p class="price-note" id="priceNote">Giá trên chỉ gồm kính. Chi phí tròng báo qua Zalo.</p>
+
+          <button type="button" class="order-btn" id="orderBtn">
+            <svg class="order-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/>
+              <path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.2L20 8H7"/>
+            </svg>
+            <span class="order-btn__text">
+              <strong id="ctaTitle">ĐẶT HÀNG NGAY</strong>
+              <span id="ctaSub">(Chỉ áp dụng khi mua kính)</span>
+            </span>
+            <svg class="order-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 6l6 6-6 6"/>
+            </svg>
+          </button>
+
+          <a class="order-btn order-btn--zalo is-hidden" id="zaloCta" href="https://zalo.me/" target="_blank" rel="noopener">
+            <span class="zalo-btn__logo">Zalo</span>
+            <span class="order-btn__text">
+              <strong>LIÊN HỆ TƯ VẤN QUA ZALO</strong>
+              <span>Báo giá & tư vấn thay tròng</span>
+            </span>
+            <svg class="order-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 6l6 6-6 6"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="zalo-box" id="zaloBox">
+          <div class="zalo-box__top">
+            <svg class="zalo-box__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 14v3a2 2 0 0 0 2 2h1"/>
+              <path d="M20 14v3a2 2 0 0 1-2 2h-1"/>
+              <path d="M4 14a6 6 0 0 1 6-6"/>
+              <path d="M20 14a6 6 0 0 0-6-6"/>
+              <path d="M9 18v2h6v-2"/>
+            </svg>
+            <div class="zalo-box__text">
+              <strong id="zaloBoxTitle">Muốn mua tròng?</strong>
+              <p id="zaloBoxDesc">Vui lòng liên hệ tư vấn qua Zalo để được hỗ trợ, báo giá và lựa chọn loại tròng phù hợp.</p>
+            </div>
+          </div>
+          <a class="zalo-btn" href="https://zalo.me/" target="_blank" rel="noopener">
+            <span class="zalo-btn__logo">Zalo</span>
+            Liên hệ tư vấn qua Zalo →
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- Trust -->
+    <div class="trust">
+      <div class="trust__item">
+        <div class="trust__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l8 3v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-3Z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div>
+          <strong>Sản phẩm chính hãng</strong>
+          <span>Cam kết 100%</span>
+        </div>
+      </div>
+      <div class="trust__item">
+        <div class="trust__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 8h12l-1 12H7L6 8Z"/>
+            <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+            <path d="M10 13h4"/>
+          </svg>
+        </div>
+        <div>
+          <strong>Đổi trả dễ dàng</strong>
+          <span>Trong 7 ngày nếu lỗi từ nhà sản xuất</span>
+        </div>
+      </div>
+      <div class="trust__item">
+        <div class="trust__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7h11v10H3z"/>
+            <path d="M14 10h4l3 3v4h-7v-7Z"/>
+            <circle cx="7" cy="18.5" r="1.5"/>
+            <circle cx="17.5" cy="18.5" r="1.5"/>
+          </svg>
+        </div>
+        <div>
+          <strong>Giao hàng toàn quốc</strong>
+          <span>Nhanh chóng, an toàn</span>
+        </div>
+      </div>
+      <div class="trust__item">
+        <div class="trust__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 14v3a2 2 0 0 0 2 2h1"/>
+            <path d="M20 14v3a2 2 0 0 1-2 2h-1"/>
+            <path d="M4 14a6 6 0 0 1 6-6"/>
+            <path d="M20 14a6 6 0 0 0-6-6"/>
+            <path d="M9 18v2h6v-2"/>
+          </svg>
+        </div>
+        <div>
+          <strong>Tư vấn tận tâm</strong>
+          <span>Đội ngũ tư vấn 1:1 hỗ trợ qua Zalo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var BASE = "https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/";
+      var ZALO = "https://zalo.me/";
+
+      var CHECK_SVG =
+        '<span class="check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>';
+
+      var CHEV_SVG =
+        '<svg class="lens__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+
+      /* Logic bảng: màu / giá / tròng mặc định theo từng mã */
+      var models = [
+        {
+          id: "01",
+          name: "SUNGLASSES",
+          desc: "Nhiều màu tròng đa dạng phiên bản",
+          price: "109.000đ",
+          defaultLens: "Tròng theo kính",
+          defaultLensDesc: "Tròng sẵn theo mẫu kính",
+          colors: [
+            { name: "Đen Xám", hex: "#2a2a2a", src: BASE + "Type/1/1788833816624_1847452031280648254_5973807768524463994_25062bfde4d023a0a708c10684137eb8.jpg" },
+            { name: "Nâu Trà", hex: "#8b5e3c", src: BASE + "Type/1/30019c44890a0954501b.jpg" },
+            { name: "Xanh Đậm", hex: "#0d3d28", src: BASE + "Type/1/1788833835801_1847452031280648254_5973807768524463994_3801d96cebae7764da9ea533b2de6715.jpg" }
+          ]
+        },
+        {
+          id: "02",
+          name: "GOLD RIMLESS",
+          desc: "Nam tính · Lịch lãm",
+          price: "249.000đ",
+          defaultLens: "Tròng theo kính",
+          defaultLensDesc: "Tròng sẵn theo mẫu kính",
+          colors: [
+            { name: "Đen Xám", hex: "#1a1a1a", src: BASE + "Type/2/1788834603092_1847452031280648254_5973807768524463994_b4c88b9c7c1c4768eb6325a5bd5eb194.jpg" },
+            { name: "Vàng Night Vision", hex: "#c9a000", src: BASE + "Type/2/1788834521393_1847452031280648254_5973807768524463994_211384ea13ee384268fb26a5855baa38.jpg" },
+            { name: "Gray Green", hex: "#4a5a48", src: BASE + "Type/2/5d05d8f34abdcae393ac.jpg" }
+          ]
+        },
+        {
+          id: "03",
+          name: "POLARIZED",
+          desc: "Giảm chói · Bảo vệ mắt",
+          price: "109.000đ",
+          defaultLens: "Tròng Polarized theo sản phẩm",
+          defaultLensDesc: "Tròng 1 màu · Gọng 3 màu",
+          colors: [
+            { name: "Đen", hex: "#1a1a1a", src: BASE + "Type/3/1788834010179_1847452031280648254_5973807768524463994_f5aeb0f71384c606d71e426377762445.jpg" },
+            { name: "Trắng Kem", hex: "#e8e0d0", src: BASE + "Type/3/1788834023559_1847452031280648254_5973807768524463994_4f4335a6c329a6b76abbbfb660496823.jpg" },
+            { name: "Xám Trong", hex: "#9a9a9a", src: BASE + "Type/3/1788834031751_1847452031280648254_5973807768524463994_02af1f705a1122888e2d38dfb4c3499b.jpg" }
+          ]
+        },
+        {
+          id: "04",
+          name: "COLORSHIFT",
+          desc: "Đổi màu thông minh theo ánh sáng",
+          price: "109.000đ",
+          defaultLens: "Theo phiên bản chọn",
+          defaultLensDesc: "Theo màu tròng đang chọn",
+          colors: [
+            { name: "Tròng thường", hex: "#555", src: BASE + "Type/4/1788837405153_1847452031280648254_5973807768524463994_747e1c6a8171a75001dc29c5cdb74bda.jpg" },
+            { name: "Đổi Nâu Trà", hex: "#8b5e3c", src: BASE + "Type/4/1788837392815_1847452031280648254_5973807768524463994_5a10509aa7a3a08c3f625ecb5c267c36.jpg" },
+            { name: "Đổi Xám", hex: "#6a6a6a", src: BASE + "Type/4/1788837416333_1847452031280648254_5973807768524463994_fd7755f88db3aec84327180cfbcdc267.jpg" }
+          ]
+        }
+      ];
+
+      /* Bước 3: mặc định + các option thay tròng (Râm cận / Đổi màu cận / Polarized / Cận-viễn) */
+      function getLenses(model) {
+        return [
+          {
+            id: "default",
+            isDefault: true,
+            name: model.defaultLens,
+            desc: model.defaultLensDesc,
+            img: BASE + "Trongmat/Trongram.png"
+          },
+          {
+            id: "ram",
+            isDefault: false,
+            name: "Râm cận",
+            desc: "Tròng râm theo độ cận",
+            img: BASE + "Trongmat/Trongram.png"
+          },
+          {
+            id: "doi",
+            isDefault: false,
+            name: "Đổi màu cận",
+            desc: "Trong nhà trong suốt – Ra ngoài đổi màu",
+            img: BASE + "Trongmat/Trongdoimau.png"
+          },
+          {
+            id: "pol",
+            isDefault: false,
+            name: "Polarized",
+            desc: "Giảm chói, bảo vệ mắt",
+            img: BASE + "Trongmat/Trongpolarezed.png"
+          },
+          {
+            id: "can",
+            isDefault: false,
+            name: "Cận-viễn",
+            desc: "Nhập độ cận, loạn, trục",
+            img: BASE + "Trongmat/Trongcan.png"
+          }
+        ];
+      }
+
+      var state = { model: 0, color: 2, lens: 0 };
+
+      var el = {
+        models: document.getElementById("models"),
+        swatches: document.getElementById("swatches"),
+        lenses: document.getElementById("lenses"),
+        previewImg: document.getElementById("previewImg"),
+        previewLabel: document.getElementById("previewLabel"),
+        colorSub: document.getElementById("colorSub"),
+        sumImg: document.getElementById("sumImg"),
+        sumModel: document.getElementById("sumModel"),
+        sumColor: document.getElementById("sumColor"),
+        sumDot: document.getElementById("sumDot"),
+        sumLens: document.getElementById("sumLens"),
+        sumPrice: document.getElementById("sumPrice"),
+        lensNote: document.getElementById("lensNote"),
+        orderBtn: document.getElementById("orderBtn"),
+        zaloCta: document.getElementById("zaloCta"),
+        priceNote: document.getElementById("priceNote"),
+        ctaSub: document.getElementById("ctaSub"),
+        zaloBoxTitle: document.getElementById("zaloBoxTitle"),
+        zaloBoxDesc: document.getElementById("zaloBoxDesc")
+      };
+
+      function currentModel() { return models[state.model]; }
+      function currentColor() { return currentModel().colors[state.color]; }
+      function currentLenses() { return getLenses(currentModel()); }
+      function currentLens() { return currentLenses()[state.lens]; }
+      function isChangingLens() { return !currentLens().isDefault; }
+
+      function thumbFor(m) {
+        var idx = m.id === "01" ? 2 : m.id === "02" ? 1 : 0;
+        return m.colors[idx].src;
+      }
+
+      function renderModels() {
+        el.models.innerHTML = models.map(function (m, i) {
+          var active = i === state.model;
+          var img = active ? currentColor().src : thumbFor(m);
+          return (
+            '<button type="button" class="model' + (active ? " is-active" : "") + '" data-i="' + i + '">' +
+              CHECK_SVG +
+              '<div class="model__img"><img src="' + img + '" alt="' + m.name + '" /></div>' +
+              '<div class="model__meta">' +
+                '<div class="model__title"><span>' + m.id + "</span>" + m.name + "</div>" +
+                '<div class="model__desc">' + m.desc + "</div>" +
+              "</div>" +
+            "</button>"
+          );
+        }).join("");
+
+        el.models.querySelectorAll(".model").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            state.model = +btn.getAttribute("data-i");
+            /* Reset màu mặc định theo mã + luôn về tròng mặc định */
+            state.color = models[state.model].id === "01" ? 2 : 0;
+            state.lens = 0;
+            renderAll();
+          });
+        });
+      }
+
+      function renderSwatches() {
+        var m = currentModel();
+        el.colorSub.textContent = "Các màu có sẵn của mã " + m.id;
+        el.swatches.innerHTML = m.colors.map(function (c, i) {
+          return (
+            '<button type="button" class="swatch' + (i === state.color ? " is-active" : "") + '" data-i="' + i + '">' +
+              CHECK_SVG +
+              '<div class="swatch__img"><img src="' + c.src + '" alt="' + c.name + '" /></div>' +
+              '<div class="swatch__name">' + c.name + "</div>" +
+            "</button>"
+          );
+        }).join("");
+
+        el.swatches.querySelectorAll(".swatch").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            state.color = +btn.getAttribute("data-i");
+            renderPreview();
+            renderSummary();
+            renderCTA();
+            renderSwatchesActive();
+            renderModels();
+          });
+        });
+      }
+
+      function renderSwatchesActive() {
+        el.swatches.querySelectorAll(".swatch").forEach(function (btn, i) {
+          btn.classList.toggle("is-active", i === state.color);
+        });
+      }
+
+      function renderPreview() {
+        var c = currentColor();
+        el.previewImg.src = c.src;
+        el.previewImg.alt = c.name;
+        el.previewLabel.textContent = c.name;
+      }
+
+      function renderLenses() {
+        var list = currentLenses();
+        el.lenses.innerHTML = list.map(function (l, i) {
+          return (
+            '<button type="button" class="lens' + (i === state.lens ? " is-active" : "") + '" data-i="' + i + '">' +
+              CHECK_SVG +
+              '<div class="lens__icon"><img src="' + l.img + '" alt="' + l.name + '" /></div>' +
+              '<div class="lens__text"><strong>' + l.name + "</strong><span>" + l.desc + "</span></div>" +
+              CHEV_SVG +
+            "</button>"
+          );
+        }).join("");
+
+        el.lenses.querySelectorAll(".lens").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            state.lens = +btn.getAttribute("data-i");
+            el.lenses.querySelectorAll(".lens").forEach(function (b, i) {
+              b.classList.toggle("is-active", i === state.lens);
+            });
+            renderSummary();
+            renderCTA();
+          });
+        });
+      }
+
+      function renderSummary() {
+        var m = currentModel();
+        var c = currentColor();
+        var l = currentLens();
+        el.sumImg.src = c.src;
+        el.sumModel.textContent = "Mã " + m.id + " — " + m.name;
+        el.sumColor.textContent = c.name;
+        el.sumDot.style.background = c.hex;
+        el.sumLens.textContent = l.name;
+        /* Không tự cộng giá tròng — luôn chỉ hiện giá kính */
+        el.sumPrice.textContent = m.price;
+      }
+
+      function renderCTA() {
+        var m = currentModel();
+        var changing = isChangingLens();
+
+        el.lensNote.classList.toggle("is-visible", changing);
+        el.priceNote.classList.toggle("is-visible", changing);
+
+        if (changing) {
+          /* Khách chọn thay tròng → CTA Zalo, không cộng giá */
+          el.orderBtn.classList.add("is-hidden");
+          el.zaloCta.classList.remove("is-hidden");
+          el.zaloBoxTitle.textContent = "Thay tròng cần tư vấn";
+          el.zaloBoxDesc.textContent = "Chi phí tròng báo qua Zalo. Không tự cộng vào giá kính trên web.";
+        } else {
+          /* Chỉ mua kính → ĐẶT HÀNG NGAY */
+          el.orderBtn.classList.remove("is-hidden");
+          el.zaloCta.classList.add("is-hidden");
+          if (m.id === "04") {
+            el.ctaSub.textContent = "Đặt kính ngay · Tròng liên hệ Zalo";
+            el.zaloBoxTitle.textContent = "Muốn đổi / thay tròng?";
+            el.zaloBoxDesc.textContent = "Mã 04: đổi màu / thay tròng phát sinh thêm phí. Liên hệ Zalo để được báo giá.";
+          } else {
+            el.ctaSub.textContent = "(Chỉ áp dụng khi mua kính)";
+            el.zaloBoxTitle.textContent = "Muốn mua tròng?";
+            el.zaloBoxDesc.textContent = "Vui lòng liên hệ tư vấn qua Zalo để được hỗ trợ, báo giá và lựa chọn loại tròng phù hợp.";
+          }
+        }
+      }
+
+      function renderAll() {
+        renderModels();
+        renderSwatches();
+        renderPreview();
+        renderLenses();
+        renderSummary();
+        renderCTA();
+      }
+
+      document.getElementById("prevColor").addEventListener("click", function () {
+        var n = currentModel().colors.length;
+        state.color = (state.color - 1 + n) % n;
+        renderPreview();
+        renderSummary();
+        renderCTA();
+        renderSwatchesActive();
+        renderModels();
+      });
+
+      document.getElementById("nextColor").addEventListener("click", function () {
+        var n = currentModel().colors.length;
+        state.color = (state.color + 1) % n;
+        renderPreview();
+        renderSummary();
+        renderCTA();
+        renderSwatchesActive();
+        renderModels();
+      });
+
+      el.orderBtn.addEventListener("click", function () {
+        if (isChangingLens()) return;
+        var m = currentModel();
+        var c = currentColor();
+        alert(
+          "Đặt hàng kính:\n" +
+          "Mã " + m.id + " — " + m.name + "\n" +
+          "Màu: " + c.name + "\n" +
+          "Tròng: " + currentLens().name + "\n" +
+          "Giá kính: " + m.price + "\n\n" +
+          "(Chỉ áp dụng khi mua kính — không gồm thay tròng)"
+        );
+      });
+
+      el.zaloCta.href = ZALO;
+
+      state.model = 0;
+      state.color = 2;
+      state.lens = 0;
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
