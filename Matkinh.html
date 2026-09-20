@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
@@ -23,7 +23,6 @@
       --purple: #4b2475;
       --text: #1a1a1a;
       --muted: #5a5a5a;
-      --line: #c9c4b8;
     }
 
     body {
@@ -34,75 +33,14 @@
     }
 
     .needs-section {
-      padding: 64px 24px 80px;
-      background: #f5f2ea url("bg2.png") center top / cover no-repeat;
+      padding: 21px 24px 80px;
+      background: #fcfaf5;
       overflow: hidden;
     }
 
     .needs-inner {
       max-width: 1280px;
       margin: 0 auto;
-    }
-
-    /* Header */
-    .needs-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-
-    .needs-title {
-      font-size: clamp(1.75rem, 4vw, 2.75rem);
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      line-height: 1.2;
-      text-transform: uppercase;
-      color: var(--navy);
-    }
-
-    .needs-title span {
-      color: var(--brown);
-    }
-
-    .needs-sub {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
-
-    .needs-sub__line {
-      width: 48px;
-      height: 1px;
-      background: var(--line);
-      position: relative;
-    }
-
-    .needs-sub__line::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 6px;
-      height: 6px;
-      background: var(--brown);
-      transform: translateY(-50%) rotate(45deg);
-    }
-
-    .needs-sub__line--left::after { right: -10px; }
-    .needs-sub__line--right::after { left: -10px; }
-
-    .needs-sub__text {
-      font-size: 0.92rem;
-      font-weight: 500;
-      color: var(--muted);
-    }
-
-    .needs-sub__hint {
-      width: 100%;
-      margin-top: 6px;
-      font-size: 0.85rem;
-      color: #7a756c;
     }
 
     /* ========== Grid: equal columns ========== */
@@ -392,15 +330,7 @@
     /* ========== Mobile ========== */
     @media (max-width: 720px) {
       .needs-section {
-        padding: 40px 16px 56px;
-      }
-
-      .needs-header {
-        margin-bottom: 28px;
-      }
-
-      .needs-sub__line {
-        width: 28px;
+        padding: 13px 16px 56px;
       }
 
       .needs-grid {
@@ -410,12 +340,12 @@
 
       .need-card {
         display: grid;
-        grid-template-columns: 36% 1fr;
-        gap: 12px;
-        align-items: stretch;
+        grid-template-columns: 46% 1fr;
+        gap: 8px;
+        align-items: start;
         background: rgba(255, 255, 255, 0.5);
         border-radius: 8px;
-        padding: 10px;
+        padding: 8px;
         height: auto;
       }
 
@@ -425,96 +355,132 @@
 
       .need-model--side {
         display: block;
-        aspect-ratio: auto;
-        height: 100%;
-        min-height: 260px;
+        width: 100%;
+        aspect-ratio: 1000 / 1200;
+        height: auto;
+        min-height: 0;
+        max-height: none;
         border-radius: 6px;
         margin-top: 0;
+        align-self: start;
+      }
+
+      .need-model--side img {
+        object-fit: cover;
+        object-position: center top;
       }
 
       .need-card__body {
         height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 5px;
+        padding: 0;
       }
 
       .need-card__top {
         height: auto;
         min-height: 0;
-        margin-bottom: 6px;
+        margin-bottom: 0;
+        gap: 6px;
+        align-items: flex-start;
       }
 
       .need-card__name {
-        font-size: 0.78rem;
-        white-space: nowrap;
+        font-size: 0.75rem;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        line-height: 1.2;
       }
 
       .need-card__desc {
-        font-size: 0.65rem;
+        font-size: 0.62rem;
+        margin-top: 2px;
         -webkit-line-clamp: 2;
       }
 
       .need-badge {
-        width: 30px;
-        height: 24px;
-        font-size: 0.68rem;
+        width: 28px;
+        height: 22px;
+        font-size: 0.65rem;
+        margin-top: 1px;
       }
 
       .need-product {
-        aspect-ratio: 16 / 9;
-        margin-bottom: 8px;
-        padding: 6px;
-        border-radius: 6px;
+        aspect-ratio: 2 / 1;
+        margin-bottom: 0;
+        padding: 2px 4px;
+        border-radius: 4px;
+        flex-shrink: 0;
       }
 
       .need-swatches {
-        height: 50px;
-        margin-bottom: 8px;
+        height: auto;
+        margin-bottom: 0;
         gap: 4px;
+        align-items: start;
+      }
+
+      .need-swatch {
+        gap: 6px;
       }
 
       .need-swatch__dot {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
       }
 
       .need-swatch__label {
         font-size: 0.5rem;
-        height: 20px;
+        height: auto;
+        min-height: 0;
+        line-height: 1.2;
+        padding-top: 0;
       }
 
       .need-price-block {
         height: auto;
-        min-height: 36px;
+        min-height: 0;
         align-items: flex-start;
-        margin-bottom: 8px;
+        margin-bottom: 0;
       }
 
       .need-price {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         text-align: left;
       }
 
       .need-price-note {
         text-align: left;
-        font-size: 0.55rem;
+        font-size: 0.5rem;
+        margin-top: 0;
+        min-height: 0;
       }
 
       .need-cta {
-        height: 36px;
-        font-size: 0.65rem;
+        height: 34px;
+        font-size: 0.62rem;
         margin-bottom: 0;
-        letter-spacing: 0.03em;
+        letter-spacing: 0.02em;
       }
     }
 
     @media (max-width: 400px) {
       .need-card {
-        grid-template-columns: 34% 1fr;
-        gap: 8px;
-        padding: 8px;
+        grid-template-columns: 44% 1fr;
+        gap: 6px;
+        padding: 6px;
       }
 
-      .need-model--side {
-        min-height: 230px;
+      .need-card__body {
+        gap: 4px;
+      }
+
+      .need-product {
+        aspect-ratio: 2.2 / 1;
+        padding: 2px;
       }
     }
   </style>
@@ -522,21 +488,11 @@
 <body>
   <section class="needs-section" id="chon-theo-nhu-cau">
     <div class="needs-inner">
-      <header class="needs-header">
-        <h2 class="needs-title">CHỌN THEO <span>NHU CẦU</span></h2>
-        <div class="needs-sub">
-          <span class="needs-sub__line needs-sub__line--left" aria-hidden="true"></span>
-          <p class="needs-sub__text">4 thiết kế – 4 trải nghiệm khác biệt.</p>
-          <span class="needs-sub__line needs-sub__line--right" aria-hidden="true"></span>
-          <p class="needs-sub__hint">Chọn chiếc kính phù hợp nhất với bạn.</p>
-        </div>
-      </header>
-
       <div class="needs-grid">
         <!-- 01 -->
         <article class="need-card need-card--01">
           <div class="need-model need-model--side">
-            <img src="Model/1/M1.jpg" alt="Model đeo Sunglasses" />
+            <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Model/1/M1.jpg" alt="Model đeo Sunglasses" />
           </div>
           <div class="need-card__body">
             <div class="need-card__top">
@@ -548,19 +504,19 @@
             </div>
 
             <div class="need-product">
-              <img class="need-product__img" src="Type/1/1788833816624_1847452031280648254_5973807768524463994_25062bfde4d023a0a708c10684137eb8.jpg" alt="Kính Sunglasses" />
+              <img class="need-product__img" src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/1/1788833816624_1847452031280648254_5973807768524463994_25062bfde4d023a0a708c10684137eb8.jpg" alt="Kính Sunglasses" />
             </div>
 
             <div class="need-swatches" role="group" aria-label="Chọn màu kính">
-              <button type="button" class="need-swatch is-active" data-src="Type/1/1788833816624_1847452031280648254_5973807768524463994_25062bfde4d023a0a708c10684137eb8.jpg" aria-pressed="true">
+              <button type="button" class="need-swatch is-active" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/1/1788833816624_1847452031280648254_5973807768524463994_25062bfde4d023a0a708c10684137eb8.jpg" aria-pressed="true">
                 <span class="need-swatch__dot" style="background: linear-gradient(135deg,#2a2a2a,#6b6b6b);"></span>
                 <span class="need-swatch__label">Đen xám</span>
               </button>
-              <button type="button" class="need-swatch" data-src="Type/1/30019c44890a0954501b.jpg" aria-pressed="false">
+              <button type="button" class="need-swatch" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/1/30019c44890a0954501b.jpg" aria-pressed="false">
                 <span class="need-swatch__dot" style="background: linear-gradient(135deg,#5c3a1e,#a67c3c);"></span>
                 <span class="need-swatch__label">Nâu trà</span>
               </button>
-              <button type="button" class="need-swatch" data-src="Type/1/1788833835801_1847452031280648254_5973807768524463994_3801d96cebae7764da9ea533b2de6715.jpg" aria-pressed="false">
+              <button type="button" class="need-swatch" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/1/1788833835801_1847452031280648254_5973807768524463994_3801d96cebae7764da9ea533b2de6715.jpg" aria-pressed="false">
                 <span class="need-swatch__dot" style="background: linear-gradient(135deg,#0d3d28,#1a6b45);"></span>
                 <span class="need-swatch__label">Xanh đậm</span>
               </button>
@@ -573,7 +529,7 @@
             <button type="button" class="need-cta">Chọn mã 01 →</button>
 
             <div class="need-model need-model--bottom">
-              <img src="Model/1/M1.jpg" alt="Model đeo Sunglasses" />
+              <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Model/1/M1.jpg" alt="Model đeo Sunglasses" />
             </div>
           </div>
         </article>
@@ -581,7 +537,7 @@
         <!-- 02 -->
         <article class="need-card need-card--02">
           <div class="need-model need-model--side">
-            <img src="Model/2/M2.jpg" alt="Model đeo Veithdia" />
+            <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Model/2/M2.jpg" alt="Model đeo Veithdia" />
           </div>
           <div class="need-card__body">
             <div class="need-card__top">
@@ -593,19 +549,19 @@
             </div>
 
             <div class="need-product">
-              <img class="need-product__img" src="Type/2/1788834603092_1847452031280648254_5973807768524463994_b4c88b9c7c1c4768eb6325a5bd5eb194.jpg" alt="Kính Veithdia" />
+              <img class="need-product__img" src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/2/1788834603092_1847452031280648254_5973807768524463994_b4c88b9c7c1c4768eb6325a5bd5eb194.jpg" alt="Kính Veithdia" />
             </div>
 
             <div class="need-swatches" role="group" aria-label="Chọn màu kính">
-              <button type="button" class="need-swatch is-active" data-src="Type/2/1788834603092_1847452031280648254_5973807768524463994_b4c88b9c7c1c4768eb6325a5bd5eb194.jpg" aria-pressed="true">
+              <button type="button" class="need-swatch is-active" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/2/1788834603092_1847452031280648254_5973807768524463994_b4c88b9c7c1c4768eb6325a5bd5eb194.jpg" aria-pressed="true">
                 <span class="need-swatch__dot" style="background: linear-gradient(135deg,#1a1a1a,#555);"></span>
                 <span class="need-swatch__label">Đen xám</span>
               </button>
-              <button type="button" class="need-swatch" data-src="Type/2/1788834521393_1847452031280648254_5973807768524463994_211384ea13ee384268fb26a5855baa38.jpg" aria-pressed="false">
+              <button type="button" class="need-swatch" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/2/1788834521393_1847452031280648254_5973807768524463994_211384ea13ee384268fb26a5855baa38.jpg" aria-pressed="false">
                 <span class="need-swatch__dot" style="background: linear-gradient(135deg,#c9a000,#f0e060);"></span>
                 <span class="need-swatch__label">Vàng NV</span>
               </button>
-              <button type="button" class="need-swatch" data-src="Type/2/5d05d8f34abdcae393ac.jpg" aria-pressed="false">
+              <button type="button" class="need-swatch" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/2/5d05d8f34abdcae393ac.jpg" aria-pressed="false">
                 <span class="need-swatch__dot" style="background: linear-gradient(135deg,#3d4a3a,#6b7a68);"></span>
                 <span class="need-swatch__label">Gray Green</span>
               </button>
@@ -618,7 +574,7 @@
             <button type="button" class="need-cta">Chọn mã 02 →</button>
 
             <div class="need-model need-model--bottom">
-              <img src="Model/2/M2.jpg" alt="Model đeo Veithdia" />
+              <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Model/2/M2.jpg" alt="Model đeo Veithdia" />
             </div>
           </div>
         </article>
@@ -626,7 +582,7 @@
         <!-- 03 -->
         <article class="need-card need-card--03">
           <div class="need-model need-model--side">
-            <img src="Model/3/M3.jpg" alt="Model đeo Polarized" />
+            <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Model/3/M3.jpg" alt="Model đeo Polarized" />
           </div>
           <div class="need-card__body">
             <div class="need-card__top">
@@ -638,19 +594,19 @@
             </div>
 
             <div class="need-product">
-              <img class="need-product__img" src="Type/3/1788834010179_1847452031280648254_5973807768524463994_f5aeb0f71384c606d71e426377762445.jpg" alt="Kính Polarized" />
+              <img class="need-product__img" src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/3/1788834010179_1847452031280648254_5973807768524463994_f5aeb0f71384c606d71e426377762445.jpg" alt="Kính Polarized" />
             </div>
 
             <div class="need-swatches" role="group" aria-label="Chọn màu kính">
-              <button type="button" class="need-swatch is-active" data-src="Type/3/1788834010179_1847452031280648254_5973807768524463994_f5aeb0f71384c606d71e426377762445.jpg" aria-pressed="true">
+              <button type="button" class="need-swatch is-active" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/3/1788834010179_1847452031280648254_5973807768524463994_f5aeb0f71384c606d71e426377762445.jpg" aria-pressed="true">
                 <span class="need-swatch__dot" style="background:#1a1a1a;"></span>
                 <span class="need-swatch__label">Đen</span>
               </button>
-              <button type="button" class="need-swatch" data-src="Type/3/1788834023559_1847452031280648254_5973807768524463994_4f4335a6c329a6b76abbbfb660496823.jpg" aria-pressed="false">
+              <button type="button" class="need-swatch" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/3/1788834023559_1847452031280648254_5973807768524463994_4f4335a6c329a6b76abbbfb660496823.jpg" aria-pressed="false">
                 <span class="need-swatch__dot" style="background:#e8e0d0;"></span>
                 <span class="need-swatch__label">Trắng kem</span>
               </button>
-              <button type="button" class="need-swatch" data-src="Type/3/1788834031751_1847452031280648254_5973807768524463994_02af1f705a1122888e2d38dfb4c3499b.jpg" aria-pressed="false">
+              <button type="button" class="need-swatch" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/3/1788834031751_1847452031280648254_5973807768524463994_02af1f705a1122888e2d38dfb4c3499b.jpg" aria-pressed="false">
                 <span class="need-swatch__dot" style="background: linear-gradient(135deg,#9a9a9a,#d0d0d0);"></span>
                 <span class="need-swatch__label">Xám trong</span>
               </button>
@@ -663,7 +619,7 @@
             <button type="button" class="need-cta">Chọn mã 03 →</button>
 
             <div class="need-model need-model--bottom">
-              <img src="Model/3/M3.jpg" alt="Model đeo Polarized" />
+              <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Model/3/M3.jpg" alt="Model đeo Polarized" />
             </div>
           </div>
         </article>
@@ -671,7 +627,7 @@
         <!-- 04 -->
         <article class="need-card need-card--04">
           <div class="need-model need-model--side">
-            <img src="Model/4/M4.jpg" alt="Model đeo Colorshift" />
+            <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Model/4/M4.jpg" alt="Model đeo Colorshift" />
           </div>
           <div class="need-card__body">
             <div class="need-card__top">
@@ -683,19 +639,19 @@
             </div>
 
             <div class="need-product">
-              <img class="need-product__img" src="Type/4/1788837405153_1847452031280648254_5973807768524463994_747e1c6a8171a75001dc29c5cdb74bda.jpg" alt="Kính Colorshift" />
+              <img class="need-product__img" src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/4/1788837405153_1847452031280648254_5973807768524463994_747e1c6a8171a75001dc29c5cdb74bda.jpg" alt="Kính Colorshift" />
             </div>
 
             <div class="need-swatches" role="group" aria-label="Chọn màu kính">
-              <button type="button" class="need-swatch is-active" data-src="Type/4/1788837405153_1847452031280648254_5973807768524463994_747e1c6a8171a75001dc29c5cdb74bda.jpg" aria-pressed="true">
+              <button type="button" class="need-swatch is-active" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/4/1788837405153_1847452031280648254_5973807768524463994_747e1c6a8171a75001dc29c5cdb74bda.jpg" aria-pressed="true">
                 <span class="need-swatch__dot" style="background: linear-gradient(135deg,#2a2a2a,#888);"></span>
                 <span class="need-swatch__label">Tròng thường</span>
               </button>
-              <button type="button" class="need-swatch" data-src="Type/4/1788837392815_1847452031280648254_5973807768524463994_5a10509aa7a3a08c3f625ecb5c267c36.jpg" aria-pressed="false">
+              <button type="button" class="need-swatch" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/4/1788837392815_1847452031280648254_5973807768524463994_5a10509aa7a3a08c3f625ecb5c267c36.jpg" aria-pressed="false">
                 <span class="need-swatch__dot" style="background: linear-gradient(135deg,#5c3a1e,#a67c52);"></span>
                 <span class="need-swatch__label">Đổi nâu trà</span>
               </button>
-              <button type="button" class="need-swatch" data-src="Type/4/1788837416333_1847452031280648254_5973807768524463994_fd7755f88db3aec84327180cfbcdc267.jpg" aria-pressed="false">
+              <button type="button" class="need-swatch" data-src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Type/4/1788837416333_1847452031280648254_5973807768524463994_fd7755f88db3aec84327180cfbcdc267.jpg" aria-pressed="false">
                 <span class="need-swatch__dot" style="background: linear-gradient(135deg,#4a4a4a,#9a9a9a);"></span>
                 <span class="need-swatch__label">Đổi xám</span>
               </button>
@@ -708,7 +664,7 @@
             <button type="button" class="need-cta">Chọn mã 04 →</button>
 
             <div class="need-model need-model--bottom">
-              <img src="Model/4/M4.jpg" alt="Model đeo Colorshift" />
+              <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Model/4/M4.jpg" alt="Model đeo Colorshift" />
             </div>
           </div>
         </article>

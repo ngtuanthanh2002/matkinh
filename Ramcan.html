@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tròng Râm Cận & Đổi Màu Cận</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f5f1e8;
+      --card: #ffffff;
+      --ink: #2e2e2e;
+      --title: #333333;
+      --muted: #6e6e6e;
+      --grey: #555555;
+      --brown: #8b6d4d;
+      --line: #d8d2c6;
+      --radius: 14px;
+    }
+
+    body {
+      font-family: "Montserrat", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .ramcan {
+      padding: 20px 20px 36px;
+    }
+
+    .ramcan__inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    /* ========== TOP FEATURES ========== */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-bottom: 24px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 14px;
+      position: relative;
+    }
+
+    .feature:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .feature__icon {
+      flex-shrink: 0;
+      width: 50px;
+      height: 50px;
+      border: 1.5px solid var(--title);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--title);
+    }
+
+    .feature__icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    .feature__text h3 {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 1.25;
+      margin-bottom: 3px;
+      color: var(--title);
+    }
+
+    .feature__text p {
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.35;
+      font-weight: 400;
+    }
+
+    /* ========== CARDS ========== */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    .card__head {
+      padding: 11px 16px;
+      text-align: center;
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 10px;
+      margin: 12px 12px 0;
+    }
+
+    .card--ram .card__head { background: var(--grey); }
+    .card--doi .card__head { background: var(--brown); }
+
+    .card__sub {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 14px 16px 4px;
+    }
+
+    .card__sub-line {
+      flex: 1;
+      max-width: 70px;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .card__sub-text {
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--title);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .card__body {
+      padding: 6px 16px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Lens options */
+    .lens-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .lens-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .lens-item__img {
+      width: 100%;
+      aspect-ratio: 5 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      margin-bottom: 10px;
+    }
+
+    .lens-item__img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .lens-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 108px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .lens-badge--grey { background: var(--grey); }
+    .lens-badge--brown { background: var(--brown); }
+
+    .lens-item__desc {
+      font-size: 0.7rem;
+      line-height: 1.45;
+      color: var(--muted);
+      font-weight: 400;
+      max-width: 210px;
+    }
+
+    /* Transition */
+    .trans {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 6px;
+      align-items: start;
+      flex: 1;
+    }
+
+    .trans__side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .trans__img {
+      width: 100%;
+      aspect-ratio: 5 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      margin-bottom: 10px;
+    }
+
+    .trans__img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .trans__arrow {
+      align-self: center;
+      color: var(--brown);
+      display: flex;
+      align-items: center;
+      margin-top: 12%;
+    }
+
+    .trans__arrow svg {
+      width: 42px;
+      height: 18px;
+    }
+
+    .trans__label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .trans__label-icon {
+      width: 26px;
+      height: 26px;
+      color: var(--title);
+      margin-bottom: 2px;
+    }
+
+    .trans__label-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .trans__label strong {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--title);
+    }
+
+    .trans__label span {
+      font-size: 0.68rem;
+      color: var(--muted);
+      font-weight: 400;
+      line-height: 1.35;
+      max-width: 150px;
+    }
+
+    .card__note {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.45;
+      font-weight: 400;
+      padding: 0 6px;
+    }
+
+    /* ========== SPECS ========== */
+    .specs {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr 1.05fr 1.2fr 0.95fr;
+      align-items: center;
+      gap: 0;
+      padding: 14px 4px;
+      border-top: 1px solid var(--line);
+    }
+
+    .spec {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 6px 10px;
+      position: relative;
+      text-align: left;
+    }
+
+    .spec:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 18%;
+      bottom: 18%;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .spec__icon {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      color: var(--title);
+    }
+
+    .spec__icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .spec__value {
+      font-size: 1.7rem;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--title);
+      letter-spacing: -0.02em;
+    }
+
+    .spec__label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      color: var(--title);
+    }
+
+    .spec__sub {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .spec__dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .spec__dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .spec__dot--grey { background: #4a4a4a; }
+    .spec__dot--brown { background: #8b6d4d; }
+
+    .spec--index {
+      flex-direction: column;
+      gap: 4px;
+      text-align: center;
+    }
+
+    .spec--logo {
+      justify-content: center;
+    }
+
+    .tg-logo-img {
+      height: 58px;
+      width: auto;
+      max-width: 100%;
+      display: block;
+      object-fit: contain;
+      /* Logo gốc có nền đen → ẩn nền đen trên nền sáng */
+      mix-blend-mode: lighten;
+    }
+
+    /* ========== TABLET ========== */
+    @media (max-width: 980px) {
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px 0;
+      }
+
+      .feature:nth-child(2n)::after { display: none; }
+
+      .card__sub-text {
+        white-space: normal;
+        font-size: 0.7rem;
+      }
+
+      .specs {
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 16px;
+      }
+
+      .spec:nth-child(3n)::after { display: none; }
+
+      .spec--logo { grid-column: 1 / -1; }
+    }
+
+    /* ========== MOBILE ========== */
+    @media (max-width: 720px) {
+      .ramcan { padding: 12px 12px 28px; }
+
+      .features {
+        grid-template-columns: 1fr;
+        margin-bottom: 16px;
+      }
+
+      .feature {
+        padding: 12px 6px;
+      }
+
+      .feature:not(:last-child)::after { display: none; }
+      .feature:not(:last-child) { border-bottom: 1px solid var(--line); }
+
+      .feature__icon {
+        width: 44px;
+        height: 44px;
+      }
+
+      .feature__icon svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .feature__text h3 { font-size: 0.78rem; }
+      .feature__text p { font-size: 0.72rem; }
+
+      .cards {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+
+      .card__head {
+        font-size: 0.85rem;
+        margin: 10px 10px 0;
+        padding: 10px 12px;
+      }
+
+      .card__sub {
+        padding: 12px 10px 4px;
+        gap: 8px;
+      }
+
+      .card__sub-line { max-width: 36px; }
+      .card__sub-text {
+        font-size: 0.68rem;
+        white-space: normal;
+      }
+
+      .card__body { padding: 6px 10px 14px; }
+
+      .lens-grid { gap: 10px; }
+
+      .lens-badge {
+        min-width: 92px;
+        padding: 6px 12px;
+        font-size: 0.62rem;
+      }
+
+      .lens-item__desc {
+        font-size: 0.66rem;
+        max-width: none;
+      }
+
+      .trans__arrow { margin-top: 10%; }
+      .trans__arrow svg {
+        width: 28px;
+        height: 14px;
+      }
+
+      .trans__label strong { font-size: 0.68rem; }
+      .trans__label span { font-size: 0.62rem; }
+      .card__note { font-size: 0.66rem; }
+
+      .specs {
+        grid-template-columns: 1fr 1fr;
+        padding: 6px 0;
+      }
+
+      .spec {
+        padding: 12px 8px;
+        justify-content: flex-start;
+      }
+
+      .spec::after { display: none !important; }
+
+      .spec:nth-child(odd) { border-right: 1px solid var(--line); }
+      .spec:not(:nth-last-child(-n + 2)) { border-bottom: 1px solid var(--line); }
+
+      .spec--index {
+        flex-direction: row;
+        gap: 8px;
+        text-align: left;
+      }
+
+      .spec--index .spec__value { font-size: 1.35rem; }
+
+      .spec:nth-child(5) {
+        grid-column: 1 / -1;
+        border-right: none;
+        justify-content: center;
+        border-bottom: none;
+      }
+
+      .tg-logo-img { height: 52px; }
+    }
+
+    @media (max-width: 400px) {
+      .lens-grid { grid-template-columns: 1fr; }
+
+      .trans {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .trans__arrow {
+        margin-top: 0;
+        transform: rotate(90deg);
+        justify-self: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="ramcan">
+    <div class="ramcan__inner">
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature__icon" aria-hidden="true">
+            <!-- Eye -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1.5 12S5.5 5.5 12 5.5 22.5 12 22.5 12 18.5 18.5 12 18.5 1.5 12 1.5 12Z"/>
+              <circle cx="12" cy="12" r="3.2"/>
+              <circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="feature__text">
+            <h3>Nhìn rõ, trong trẻo</h3>
+            <p>Hạn chế chói lóa, bảo vệ mắt</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <div class="feature__icon" aria-hidden="true">
+            <!-- UV -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.5"/>
+              <text x="12" y="15.5" text-anchor="middle" font-size="8" font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="currentColor" letter-spacing="0.5">UV</text>
+            </svg>
+          </div>
+          <div class="feature__text">
+            <h3>Chống tia UV400</h3>
+            <p>Bảo vệ mắt tối ưu</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <div class="feature__icon" aria-hidden="true">
+            <!-- Feather -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.2 3.8c-5.5-.2-11.2 3.2-14 8.8-.8 1.6-1.2 3.2-1.3 4.7l6.2-1.6c4.8-2.4 8.4-7.2 9.1-11.9Z"/>
+              <path d="M4.9 17.3 14 8.2"/>
+              <path d="M8.2 16.5c1.3.2 2.6-.1 3.8-.8"/>
+              <path d="M6.2 14.2c1.5.1 3-.4 4.3-1.3"/>
+              <path d="M5.2 11.5c1.4 0 2.9-.4 4.2-1.2"/>
+            </svg>
+          </div>
+          <div class="feature__text">
+            <h3>Mỏng nhẹ, thẩm mỹ</h3>
+            <p>Thoải mái khi đeo cả ngày</p>
+          </div>
+        </div>
+
+        <div class="feature">
+          <div class="feature__icon" aria-hidden="true">
+            <!-- Diamond / gem -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.5 9.2 7.8 3.5h8.4l4.3 5.7L12 20.5 3.5 9.2Z"/>
+              <path d="M3.5 9.2h17"/>
+              <path d="M9.2 3.5 7.2 9.2 12 20.5"/>
+              <path d="M14.8 3.5l2 5.7L12 20.5"/>
+              <path d="M12 3.5v5.7"/>
+            </svg>
+          </div>
+          <div class="feature__text">
+            <h3>Bền bỉ, hạn chế trầy</h3>
+            <p>Công nghệ phủ chống xước</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards">
+        <article class="card card--ram">
+          <div class="card__head">Tròng râm cận</div>
+          <div class="card__sub">
+            <span class="card__sub-line" aria-hidden="true"></span>
+            <p class="card__sub-text">Có sẵn màu tròng, phù hợp đi nắng</p>
+            <span class="card__sub-line" aria-hidden="true"></span>
+          </div>
+          <div class="card__body">
+            <div class="lens-grid">
+              <div class="lens-item">
+                <div class="lens-item__img">
+                  <img src="Ramcan/XAMKHOI.png" alt="Tròng xám khói" />
+                </div>
+                <span class="lens-badge lens-badge--grey">Xám khói</span>
+                <p class="lens-item__desc">Tròng xám khói đem lại cảm giác mát mẻ, giảm chói hiệu quả</p>
+              </div>
+              <div class="lens-item">
+                <div class="lens-item__img">
+                  <img src="Ramcan/NAUTRA.png" alt="Tròng nâu trà" />
+                </div>
+                <span class="lens-badge lens-badge--brown">Nâu trà</span>
+                <p class="lens-item__desc">Tròng nâu trà dịu mắt, tăng độ tương phản, phù hợp nhiều điều kiện sáng</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card card--doi">
+          <div class="card__head">Tròng đổi màu cận</div>
+          <div class="card__sub">
+            <span class="card__sub-line" aria-hidden="true"></span>
+            <p class="card__sub-text">Trong hơn khi ở trong nhà → Lên màu khi ra ngoài trời</p>
+            <span class="card__sub-line" aria-hidden="true"></span>
+          </div>
+          <div class="card__body">
+            <div class="trans">
+              <div class="trans__side">
+                <div class="trans__img">
+                  <img src="Ramcan/TRONGNHA.png" alt="Tròng trong nhà" />
+                </div>
+                <div class="trans__label">
+                  <span class="trans__label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 10.8 12 3.5l9 7.3"/>
+                      <path d="M5.5 9.8V20h13V9.8"/>
+                      <path d="M10 20v-5.5h4V20"/>
+                    </svg>
+                  </span>
+                  <strong>Trong nhà</strong>
+                  <span>Tròng trong, nhìn rõ</span>
+                </div>
+              </div>
+
+              <div class="trans__arrow" aria-hidden="true">
+                <!-- Triple arrow → → → -->
+                <svg viewBox="0 0 54 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 8h8"/>
+                  <path d="M7 3.5 12.5 8 7 12.5"/>
+                  <path d="M18 8h8"/>
+                  <path d="M23 3.5 28.5 8 23 12.5"/>
+                  <path d="M34 8h8"/>
+                  <path d="M39 3.5 44.5 8 39 12.5"/>
+                </svg>
+              </div>
+
+              <div class="trans__side">
+                <div class="trans__img">
+                  <img src="Ramcan/NGOAITROI.png" alt="Tròng ngoài trời" />
+                </div>
+                <div class="trans__label">
+                  <span class="trans__label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                      <circle cx="12" cy="12" r="3.6"/>
+                      <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/>
+                    </svg>
+                  </span>
+                  <strong>Ngoài trời</strong>
+                  <span>Tự động đổi màu khi gặp UV</span>
+                </div>
+              </div>
+            </div>
+            <p class="card__note">Tròng đổi màu TG Vision tự động điều chỉnh độ tối giúp mắt dễ chịu, bảo vệ mắt khỏi tia UV.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="specs">
+        <div class="spec spec--index">
+          <div class="spec__value">1.56</div>
+          <div class="spec__label">Chiết suất</div>
+        </div>
+
+        <div class="spec">
+          <div class="spec__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="12.5" cy="20" rx="8" ry="7"/>
+              <ellipse cx="27.5" cy="20" rx="8" ry="7"/>
+              <path d="M20.5 20h-1"/>
+              <path d="M4.5 20H3"/>
+              <path d="M37 20h-1.5"/>
+              <path d="M6.5 15.5 4 13"/>
+              <path d="M33.5 15.5 36 13"/>
+            </svg>
+          </div>
+          <div>
+            <div class="spec__label">Dải độ cận</div>
+            <div class="spec__sub">0.00 → -4.00D</div>
+          </div>
+        </div>
+
+        <div class="spec">
+          <div class="spec__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="20" cy="20" r="9.5"/>
+              <circle cx="20" cy="20" r="3.5"/>
+              <path d="M20 5.5v4M20 30.5v4M5.5 20h4M30.5 20h4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="spec__label">Độ loạn</div>
+            <div class="spec__sub">0.00 → -2.00D</div>
+          </div>
+        </div>
+
+        <div class="spec">
+          <div class="spec__dots" aria-hidden="true">
+            <span class="spec__dot spec__dot--grey"></span>
+            <span class="spec__dot spec__dot--brown"></span>
+          </div>
+          <div>
+            <div class="spec__label">2 màu tròng</div>
+            <div class="spec__sub">Xám Khói • Nâu Trà</div>
+          </div>
+        </div>
+
+        <div class="spec spec--logo">
+          <img class="tg-logo-img" src="TG LOGO.png" alt="TG Vision" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+</body>
+</html>
