@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chọn theo nhu cầu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy: #1a2537;
+      --brown: #8d5d2a;
+      --green: #0e3d26;
+      --purple: #4b2475;
+      --text: #1a1a1a;
+      --muted: #5a5a5a;
+      --line: #c9c4b8;
+    }
+
+    body {
+      font-family: "Montserrat", sans-serif;
+      color: var(--text);
+      background: #f5f2ea;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .needs-section {
+      padding: 64px 24px 80px;
+      background: #f5f2ea url("bg2.png") center top / cover no-repeat;
+      overflow: hidden;
+    }
+
+    .needs-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .needs-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .needs-title {
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    .needs-title span {
+      color: var(--brown);
+    }
+
+    .needs-sub {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .needs-sub__line {
+      width: 48px;
+      height: 1px;
+      background: var(--line);
+      position: relative;
+    }
+
+    .needs-sub__line::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 6px;
+      height: 6px;
+      background: var(--brown);
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .needs-sub__line--left::after { right: -10px; }
+    .needs-sub__line--right::after { left: -10px; }
+
+    .needs-sub__text {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .needs-sub__hint {
+      width: 100%;
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: #7a756c;
+    }
+
+    /* ========== Grid: equal columns ========== */
+    .needs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .need-card {
+      --accent: var(--navy);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100%;
+    }
+
+    .need-card--01 { --accent: var(--navy); }
+    .need-card--02 { --accent: var(--brown); }
+    .need-card--03 { --accent: var(--green); }
+    .need-card--04 { --accent: var(--purple); }
+
+    .need-card__body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+    }
+
+    /* ----- Zone 1: Header (fixed height) ----- */
+    .need-card__top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      height: 68px;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+
+    .need-badge {
+      flex-shrink: 0;
+      width: 36px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      border-radius: 3px;
+    }
+
+    .need-card__titles {
+      min-width: 0;
+      flex: 1;
+      padding-top: 2px;
+    }
+
+    .need-card__name {
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--accent);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .need-card__desc {
+      margin-top: 4px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ----- Zone 2: Product (square, equal) ----- */
+    .need-product {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      margin-bottom: 14px;
+      background: rgba(255, 255, 255, 0.55);
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .need-product img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      transition: opacity 0.2s ease;
+    }
+
+    .need-product img.is-switching {
+      opacity: 0.35;
+    }
+
+    /* ----- Zone 3: Swatches (3 equal cols, fixed height) ----- */
+    .need-swatches {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      width: 100%;
+      height: 58px;
+      margin-bottom: 14px;
+      flex-shrink: 0;
+    }
+
+    .need-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      min-width: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: inherit;
+    }
+
+    .need-swatch__dot {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1.5px #c8c2b6;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .need-swatch:hover .need-swatch__dot {
+      transform: scale(1.08);
+    }
+
+    .need-swatch.is-active .need-swatch__dot {
+      box-shadow: 0 0 0 2.5px var(--accent);
+      transform: scale(1.08);
+    }
+
+    .need-swatch__label {
+      width: 100%;
+      height: 24px;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.2;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .need-swatch.is-active .need-swatch__label {
+      color: var(--accent);
+    }
+
+    /* ----- Zone 4: Price (fixed height, note reserved) ----- */
+    .need-price-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 48px;
+      margin-bottom: 10px;
+      flex-shrink: 0;
+    }
+
+    .need-price {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .need-price-note {
+      margin-top: 2px;
+      font-size: 0.62rem;
+      color: var(--muted);
+      font-style: italic;
+      text-align: center;
+      line-height: 1.2;
+      min-height: 16px;
+    }
+
+    /* ----- Zone 5: CTA ----- */
+    .need-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      margin-bottom: 14px;
+      flex-shrink: 0;
+    }
+
+    .need-cta:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
+    /* ----- Zone 6: Model (equal aspect) ----- */
+    .need-model {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      border-radius: 4px;
+      background: #ddd;
+      margin-top: auto;
+      flex-shrink: 0;
+    }
+
+    .need-model img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .need-model--side {
+      display: none;
+    }
+
+    /* ========== Tablet ========== */
+    @media (max-width: 1024px) {
+      .needs-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 20px;
+      }
+
+      .need-card__name {
+        font-size: 0.95rem;
+        white-space: normal;
+      }
+
+      .need-card__top {
+        height: 76px;
+      }
+
+      .need-swatches {
+        height: 62px;
+      }
+
+      .need-swatch__label {
+        font-size: 0.62rem;
+        height: 28px;
+      }
+    }
+
+    /* ========== Mobile ========== */
+    @media (max-width: 720px) {
+      .needs-section {
+        padding: 40px 16px 56px;
+      }
+
+      .needs-header {
+        margin-bottom: 28px;
+      }
+
+      .needs-sub__line {
+        width: 28px;
+      }
+
+      .needs-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .need-card {
+        display: grid;
+        grid-template-columns: 36% 1fr;
+        gap: 12px;
+        align-items: stretch;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 8px;
+        padding: 10px;
+        height: auto;
+      }
+
+      .need-model--bottom {
+        display: none;
+      }
+
+      .need-model--side {
+        display: block;
+        aspect-ratio: auto;
+        height: 100%;
+        min-height: 260px;
+        border-radius: 6px;
+        margin-top: 0;
+      }
+
+      .need-card__body {
+        height: auto;
+      }
+
+      .need-card__top {
+        height: auto;
+        min-height: 0;
+        margin-bottom: 6px;
+      }
+
+      .need-card__name {
+        font-size: 0.78rem;
+        white-space: nowrap;
+      }
+
+      .need-card__desc {
+        font-size: 0.65rem;
+        -webkit-line-clamp: 2;
+      }
+
+      .need-badge {
+        width: 30px;
+        height: 24px;
+        font-size: 0.68rem;
+      }
+
+      .need-product {
+        aspect-ratio: 16 / 9;
+        margin-bottom: 8px;
+        padding: 6px;
+        border-radius: 6px;
+      }
+
+      .need-swatches {
+        height: 50px;
+        margin-bottom: 8px;
+        gap: 4px;
+      }
+
+      .need-swatch__dot {
+        width: 22px;
+        height: 22px;
+      }
+
+      .need-swatch__label {
+        font-size: 0.5rem;
+        height: 20px;
+      }
+
+      .need-price-block {
+        height: auto;
+        min-height: 36px;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+
+      .need-price {
+        font-size: 0.95rem;
+        text-align: left;
+      }
+
+      .need-price-note {
+        text-align: left;
+        font-size: 0.55rem;
+      }
+
+      .need-cta {
+        height: 36px;
+        font-size: 0.65rem;
+        margin-bottom: 0;
+        letter-spacing: 0.03em;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .need-card {
+        grid-template-columns: 34% 1fr;
+        gap: 8px;
+        padding: 8px;
+      }
+
+      .need-model--side {
+        min-height: 230px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="needs-section" id="chon-theo-nhu-cau">
+    <div class="needs-inner">
+      <header class="needs-header">
+        <h2 class="needs-title">CHỌN THEO <span>NHU CẦU</span></h2>
+        <div class="needs-sub">
+          <span class="needs-sub__line needs-sub__line--left" aria-hidden="true"></span>
+          <p class="needs-sub__text">4 thiết kế – 4 trải nghiệm khác biệt.</p>
+          <span class="needs-sub__line needs-sub__line--right" aria-hidden="true"></span>
+          <p class="needs-sub__hint">Chọn chiếc kính phù hợp nhất với bạn.</p>
+        </div>
+      </header>
+
+      <div class="needs-grid">
+        <!-- 01 -->
+        <article class="need-card need-card--01">
+          <div class="need-model need-model--side">
+            <img src="Model/1/M1.jpg" alt="Model đeo Sunglasses" />
+          </div>
+          <div class="need-card__body">
+            <div class="need-card__top">
+              <span class="need-badge">01</span>
+              <div class="need-card__titles">
+                <h3 class="need-card__name">Sunglasses</h3>
+                <p class="need-card__desc">Nhiều màu tròng đa dạng phiên bản</p>
+              </div>
+            </div>
+
+            <div class="need-product">
+              <img class="need-product__img" src="Type/1/1788833816624_1847452031280648254_5973807768524463994_25062bfde4d023a0a708c10684137eb8.jpg" alt="Kính Sunglasses" />
+            </div>
+
+            <div class="need-swatches" role="group" aria-label="Chọn màu kính">
+              <button type="button" class="need-swatch is-active" data-src="Type/1/1788833816624_1847452031280648254_5973807768524463994_25062bfde4d023a0a708c10684137eb8.jpg" aria-pressed="true">
+                <span class="need-swatch__dot" style="background: linear-gradient(135deg,#2a2a2a,#6b6b6b);"></span>
+                <span class="need-swatch__label">Đen xám</span>
+              </button>
+              <button type="button" class="need-swatch" data-src="Type/1/30019c44890a0954501b.jpg" aria-pressed="false">
+                <span class="need-swatch__dot" style="background: linear-gradient(135deg,#5c3a1e,#a67c3c);"></span>
+                <span class="need-swatch__label">Nâu trà</span>
+              </button>
+              <button type="button" class="need-swatch" data-src="Type/1/1788833835801_1847452031280648254_5973807768524463994_3801d96cebae7764da9ea533b2de6715.jpg" aria-pressed="false">
+                <span class="need-swatch__dot" style="background: linear-gradient(135deg,#0d3d28,#1a6b45);"></span>
+                <span class="need-swatch__label">Xanh đậm</span>
+              </button>
+            </div>
+
+            <div class="need-price-block">
+              <p class="need-price">GIÁ: 109.000đ</p>
+              <p class="need-price-note">&nbsp;</p>
+            </div>
+            <button type="button" class="need-cta">Chọn mã 01 →</button>
+
+            <div class="need-model need-model--bottom">
+              <img src="Model/1/M1.jpg" alt="Model đeo Sunglasses" />
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 -->
+        <article class="need-card need-card--02">
+          <div class="need-model need-model--side">
+            <img src="Model/2/M2.jpg" alt="Model đeo Veithdia" />
+          </div>
+          <div class="need-card__body">
+            <div class="need-card__top">
+              <span class="need-badge">02</span>
+              <div class="need-card__titles">
+                <h3 class="need-card__name">Veithdia Sunglasses</h3>
+                <p class="need-card__desc">Nam tính · Mạnh mẽ · Lịch lãm</p>
+              </div>
+            </div>
+
+            <div class="need-product">
+              <img class="need-product__img" src="Type/2/1788834603092_1847452031280648254_5973807768524463994_b4c88b9c7c1c4768eb6325a5bd5eb194.jpg" alt="Kính Veithdia" />
+            </div>
+
+            <div class="need-swatches" role="group" aria-label="Chọn màu kính">
+              <button type="button" class="need-swatch is-active" data-src="Type/2/1788834603092_1847452031280648254_5973807768524463994_b4c88b9c7c1c4768eb6325a5bd5eb194.jpg" aria-pressed="true">
+                <span class="need-swatch__dot" style="background: linear-gradient(135deg,#1a1a1a,#555);"></span>
+                <span class="need-swatch__label">Đen xám</span>
+              </button>
+              <button type="button" class="need-swatch" data-src="Type/2/1788834521393_1847452031280648254_5973807768524463994_211384ea13ee384268fb26a5855baa38.jpg" aria-pressed="false">
+                <span class="need-swatch__dot" style="background: linear-gradient(135deg,#c9a000,#f0e060);"></span>
+                <span class="need-swatch__label">Vàng NV</span>
+              </button>
+              <button type="button" class="need-swatch" data-src="Type/2/5d05d8f34abdcae393ac.jpg" aria-pressed="false">
+                <span class="need-swatch__dot" style="background: linear-gradient(135deg,#3d4a3a,#6b7a68);"></span>
+                <span class="need-swatch__label">Gray Green</span>
+              </button>
+            </div>
+
+            <div class="need-price-block">
+              <p class="need-price">GIÁ: 249.000đ</p>
+              <p class="need-price-note">&nbsp;</p>
+            </div>
+            <button type="button" class="need-cta">Chọn mã 02 →</button>
+
+            <div class="need-model need-model--bottom">
+              <img src="Model/2/M2.jpg" alt="Model đeo Veithdia" />
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 -->
+        <article class="need-card need-card--03">
+          <div class="need-model need-model--side">
+            <img src="Model/3/M3.jpg" alt="Model đeo Polarized" />
+          </div>
+          <div class="need-card__body">
+            <div class="need-card__top">
+              <span class="need-badge">03</span>
+              <div class="need-card__titles">
+                <h3 class="need-card__name">Polarized</h3>
+                <p class="need-card__desc">Tròng Polarized giảm chói, bảo vệ mắt</p>
+              </div>
+            </div>
+
+            <div class="need-product">
+              <img class="need-product__img" src="Type/3/1788834010179_1847452031280648254_5973807768524463994_f5aeb0f71384c606d71e426377762445.jpg" alt="Kính Polarized" />
+            </div>
+
+            <div class="need-swatches" role="group" aria-label="Chọn màu kính">
+              <button type="button" class="need-swatch is-active" data-src="Type/3/1788834010179_1847452031280648254_5973807768524463994_f5aeb0f71384c606d71e426377762445.jpg" aria-pressed="true">
+                <span class="need-swatch__dot" style="background:#1a1a1a;"></span>
+                <span class="need-swatch__label">Đen</span>
+              </button>
+              <button type="button" class="need-swatch" data-src="Type/3/1788834023559_1847452031280648254_5973807768524463994_4f4335a6c329a6b76abbbfb660496823.jpg" aria-pressed="false">
+                <span class="need-swatch__dot" style="background:#e8e0d0;"></span>
+                <span class="need-swatch__label">Trắng kem</span>
+              </button>
+              <button type="button" class="need-swatch" data-src="Type/3/1788834031751_1847452031280648254_5973807768524463994_02af1f705a1122888e2d38dfb4c3499b.jpg" aria-pressed="false">
+                <span class="need-swatch__dot" style="background: linear-gradient(135deg,#9a9a9a,#d0d0d0);"></span>
+                <span class="need-swatch__label">Xám trong</span>
+              </button>
+            </div>
+
+            <div class="need-price-block">
+              <p class="need-price">GIÁ: 109.000đ</p>
+              <p class="need-price-note">&nbsp;</p>
+            </div>
+            <button type="button" class="need-cta">Chọn mã 03 →</button>
+
+            <div class="need-model need-model--bottom">
+              <img src="Model/3/M3.jpg" alt="Model đeo Polarized" />
+            </div>
+          </div>
+        </article>
+
+        <!-- 04 -->
+        <article class="need-card need-card--04">
+          <div class="need-model need-model--side">
+            <img src="Model/4/M4.jpg" alt="Model đeo Colorshift" />
+          </div>
+          <div class="need-card__body">
+            <div class="need-card__top">
+              <span class="need-badge">04</span>
+              <div class="need-card__titles">
+                <h3 class="need-card__name">Colorshift</h3>
+                <p class="need-card__desc">Đổi màu thông minh theo ánh sáng</p>
+              </div>
+            </div>
+
+            <div class="need-product">
+              <img class="need-product__img" src="Type/4/1788837405153_1847452031280648254_5973807768524463994_747e1c6a8171a75001dc29c5cdb74bda.jpg" alt="Kính Colorshift" />
+            </div>
+
+            <div class="need-swatches" role="group" aria-label="Chọn màu kính">
+              <button type="button" class="need-swatch is-active" data-src="Type/4/1788837405153_1847452031280648254_5973807768524463994_747e1c6a8171a75001dc29c5cdb74bda.jpg" aria-pressed="true">
+                <span class="need-swatch__dot" style="background: linear-gradient(135deg,#2a2a2a,#888);"></span>
+                <span class="need-swatch__label">Tròng thường</span>
+              </button>
+              <button type="button" class="need-swatch" data-src="Type/4/1788837392815_1847452031280648254_5973807768524463994_5a10509aa7a3a08c3f625ecb5c267c36.jpg" aria-pressed="false">
+                <span class="need-swatch__dot" style="background: linear-gradient(135deg,#5c3a1e,#a67c52);"></span>
+                <span class="need-swatch__label">Đổi nâu trà</span>
+              </button>
+              <button type="button" class="need-swatch" data-src="Type/4/1788837416333_1847452031280648254_5973807768524463994_fd7755f88db3aec84327180cfbcdc267.jpg" aria-pressed="false">
+                <span class="need-swatch__dot" style="background: linear-gradient(135deg,#4a4a4a,#9a9a9a);"></span>
+                <span class="need-swatch__label">Đổi xám</span>
+              </button>
+            </div>
+
+            <div class="need-price-block">
+              <p class="need-price">GIÁ: 109.000đ</p>
+              <p class="need-price-note">(Chưa bao gồm thay tròng đổi màu)</p>
+            </div>
+            <button type="button" class="need-cta">Chọn mã 04 →</button>
+
+            <div class="need-model need-model--bottom">
+              <img src="Model/4/M4.jpg" alt="Model đeo Colorshift" />
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll(".need-card").forEach(function (card) {
+      var productImg = card.querySelector(".need-product__img");
+      var swatches = card.querySelectorAll(".need-swatch");
+
+      swatches.forEach(function (swatch) {
+        swatch.addEventListener("click", function () {
+          var src = swatch.getAttribute("data-src");
+          if (!src || productImg.getAttribute("src") === src) return;
+
+          swatches.forEach(function (s) {
+            s.classList.remove("is-active");
+            s.setAttribute("aria-pressed", "false");
+          });
+          swatch.classList.add("is-active");
+          swatch.setAttribute("aria-pressed", "true");
+
+          productImg.classList.add("is-switching");
+          setTimeout(function () {
+            productImg.src = src;
+            productImg.classList.remove("is-switching");
+          }, 150);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
