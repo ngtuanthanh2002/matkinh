@@ -410,17 +410,15 @@
     }
 
     .tg-logo-img {
-      height: 58px;
+      height: 64px;
       width: auto;
-      max-width: 100%;
+      max-width: 110px;
       display: block;
       object-fit: contain;
-      /* Logo gốc có nền đen → ẩn nền đen trên nền sáng */
-      mix-blend-mode: lighten;
     }
 
     /* ========== TABLET ========== */
-    @media (max-width: 980px) {
+    @media (max-width: 980px) and (min-width: 721px) {
       .features {
         grid-template-columns: repeat(2, 1fr);
         gap: 14px 0;
@@ -434,13 +432,44 @@
       }
 
       .specs {
-        grid-template-columns: repeat(3, 1fr);
-        row-gap: 16px;
+        grid-template-columns: 1fr 1fr;
+        padding: 0;
+        gap: 0;
       }
 
-      .spec:nth-child(3n)::after { display: none; }
+      .spec {
+        justify-content: center;
+        padding: 16px 14px;
+        min-height: 76px;
+      }
 
-      .spec--logo { grid-column: 1 / -1; }
+      .spec::after { display: none !important; }
+
+      .spec:nth-child(1),
+      .spec:nth-child(2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .spec:nth-child(1),
+      .spec:nth-child(3) {
+        border-right: 1px solid var(--line);
+      }
+
+      .spec--index {
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+      }
+
+      .spec--logo,
+      .spec:nth-child(5) {
+        grid-column: 1 / -1;
+        border: none;
+        border-top: 1px solid var(--line);
+        justify-content: center;
+        min-height: auto;
+        padding: 16px;
+      }
     }
 
     /* ========== MOBILE ========== */
@@ -520,37 +549,64 @@
       .trans__label span { font-size: 0.62rem; }
       .card__note { font-size: 0.66rem; }
 
+      /* Specs: lưới 2×2 đều + logo full width */
       .specs {
         grid-template-columns: 1fr 1fr;
-        padding: 6px 0;
+        padding: 0;
+        gap: 0;
+        border-top: 1px solid var(--line);
       }
 
       .spec {
-        padding: 12px 8px;
-        justify-content: flex-start;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 10px;
+        min-height: 78px;
+        text-align: left;
+        border: none;
+        position: relative;
       }
 
       .spec::after { display: none !important; }
 
-      .spec:nth-child(odd) { border-right: 1px solid var(--line); }
-      .spec:not(:nth-last-child(-n + 2)) { border-bottom: 1px solid var(--line); }
+      /* Đường kẻ ngang đều cả hàng 1 */
+      .spec:nth-child(1),
+      .spec:nth-child(2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      /* Đường kẻ dọc thẳng hàng giữa */
+      .spec:nth-child(1),
+      .spec:nth-child(3) {
+        border-right: 1px solid var(--line);
+      }
 
       .spec--index {
-        flex-direction: row;
-        gap: 8px;
-        text-align: left;
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+        justify-content: center;
       }
 
-      .spec--index .spec__value { font-size: 1.35rem; }
+      .spec--index .spec__value {
+        font-size: 1.4rem;
+      }
 
+      .spec--logo,
       .spec:nth-child(5) {
         grid-column: 1 / -1;
+        border: none;
+        border-top: 1px solid var(--line);
         border-right: none;
-        justify-content: center;
         border-bottom: none;
+        justify-content: center;
+        min-height: auto;
+        padding: 18px 12px;
       }
 
-      .tg-logo-img { height: 52px; }
+      .tg-logo-img { height: 56px; max-width: 100px; }
     }
 
     @media (max-width: 400px) {
@@ -650,14 +706,14 @@
             <div class="lens-grid">
               <div class="lens-item">
                 <div class="lens-item__img">
-                  <img src="Ramcan/XAMKHOI.png" alt="Tròng xám khói" />
+                  <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Ramcan/XAMKHOI.png" alt="Tròng xám khói" />
                 </div>
                 <span class="lens-badge lens-badge--grey">Xám khói</span>
                 <p class="lens-item__desc">Tròng xám khói đem lại cảm giác mát mẻ, giảm chói hiệu quả</p>
               </div>
               <div class="lens-item">
                 <div class="lens-item__img">
-                  <img src="Ramcan/NAUTRA.png" alt="Tròng nâu trà" />
+                  <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Ramcan/NAUTRA.png" alt="Tròng nâu trà" />
                 </div>
                 <span class="lens-badge lens-badge--brown">Nâu trà</span>
                 <p class="lens-item__desc">Tròng nâu trà dịu mắt, tăng độ tương phản, phù hợp nhiều điều kiện sáng</p>
@@ -677,7 +733,7 @@
             <div class="trans">
               <div class="trans__side">
                 <div class="trans__img">
-                  <img src="Ramcan/TRONGNHA.png" alt="Tròng trong nhà" />
+                  <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Ramcan/TRONGNHA.png" alt="Tròng trong nhà" />
                 </div>
                 <div class="trans__label">
                   <span class="trans__label-icon" aria-hidden="true">
@@ -706,7 +762,7 @@
 
               <div class="trans__side">
                 <div class="trans__img">
-                  <img src="Ramcan/NGOAITROI.png" alt="Tròng ngoài trời" />
+                  <img src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/Ramcan/NGOAITROI.png" alt="Tròng ngoài trời" />
                 </div>
                 <div class="trans__label">
                   <span class="trans__label-icon" aria-hidden="true">
@@ -775,7 +831,7 @@
         </div>
 
         <div class="spec spec--logo">
-          <img class="tg-logo-img" src="TG LOGO.png" alt="TG Vision" />
+          <img class="tg-logo-img" src="https://raw.githubusercontent.com/ngtuanthanh2002/matkinh/main/TG%20LOGO.png" alt="TG Vision" />
         </div>
       </div>
 
